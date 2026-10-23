@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FABRICA COFFEE · Демо админки</title>
+<style>
+:root{--ink:#29231f;--muted:#887e71;--paper:#faf7f0;--line:#e8e2d8;--gold:#c69b62;--dark:#282420;--panel:#fff;--cream:#f5ede0}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input,select,textarea{font:inherit}
+button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #dbb77e;outline-offset:2px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:15px max(20px,calc((100vw - 1240px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}.logo{background:#29241f;color:#f1dfbf;width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-family:Georgia,serif;font-size:27px}.brand b{font-size:17px;letter-spacing:.12em}.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:.16em;margin-top:4px}.demo{background:#fff3de;color:#715124;border:1px solid #ecd6ac;border-radius:999px;padding:8px 12px;font-weight:650;font-size:12px}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 20px 70px}.eyebrow{font-size:11px;font-weight:750;letter-spacing:.19em;text-transform:uppercase;color:#a18464}h1{font-size:clamp(28px,4vw,42px);letter-spacing:-.035em;margin:10px 0 10px}p{color:var(--muted);line-height:1.55;margin:0 0 14px}
+.notice{border:1px solid #e8d3ad;background:#fff9ea;border-radius:15px;padding:14px 17px;margin:18px 0 24px;color:#705331;font-size:13px;line-height:1.5}
+.toolbar,.actions,.branches{display:flex;flex-wrap:wrap;gap:9px;align-items:center}.toolbar{justify-content:space-between;margin:26px 0}.branches{padding:5px;border:1px solid var(--line);background:#fff;border-radius:13px}
+.branches button{border:0;background:transparent;border-radius:9px;padding:11px 14px;color:#686057;font-weight:650}.branches button.active{background:var(--dark);color:white}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:11px;padding:11px 15px;font-weight:700;font-size:13px}.btn.primary{background:var(--dark);color:#fff;border-color:var(--dark)}.btn.soft{background:#f4e8d7}.btn.warn{color:#a64e40}.btn:disabled{opacity:.5;cursor:not-allowed}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:25px}.card{background:#fff;border:1px solid var(--line);padding:20px;border-radius:15px}.card span{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}.card strong{display:block;font-size:32px;margin:9px 0}.card em{font-style:normal;font-size:12px;color:#8b7d6c}
+.catalog{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden}.catalog-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap}.catalog-head h2{margin:0;font-size:21px}.filters{padding:14px 20px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line)}.filters input{flex:2;min-width:200px}.filters select{flex:1;min-width:140px}
+input,select,textarea{background:#fff;border:1px solid #ded9d0;border-radius:10px;padding:11px 12px;color:#29231f;min-height:42px}textarea{min-height:88px;resize:vertical}
+table{width:100%;border-collapse:collapse}th{text-align:left;background:#faf8f3;color:var(--muted);font-size:11px;letter-spacing:.08em;padding:12px 20px}td{padding:12px 20px;border-top:1px solid #f0ece6;font-size:14px;vertical-align:middle}td small{display:block;color:var(--muted);margin-top:3px}.item-name{font-weight:700}.price{width:102px;min-width:0;text-align:right;font-weight:700;padding:8px}.empty{text-align:center;padding:48px;color:var(--muted)}.switch{display:flex;align-items:center;gap:7px;font-size:13px}.switch input{width:18px;height:18px;min-height:0;accent-color:#547b57}.foot{padding:15px 20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+dialog{border:0;padding:0;border-radius:18px;width:min(560px,calc(100vw - 26px));box-shadow:0 20px 80px #211a1355}dialog::backdrop{background:#12100ec2}.modal-head{padding:21px 25px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h2{margin:0;font-size:22px}form.modal{padding:20px 25px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}.field label{font-size:13px;font-weight:700}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.modal-foot{display:flex;justify-content:flex-end;gap:9px;padding-top:9px}
+.public-title{margin-top:10px;font-family:Georgia,serif;font-size:38px}.public-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.public-card{background:#fff;border-radius:12px;border:1px solid var(--line);padding:17px}.public-card strong{display:block}.public-card b{display:block;margin-top:10px;font-size:20px}.public-card img{width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px}.public-cat{font-size:22px;margin:28px 0 14px}
+.hidden{display:none!important}.right{white-space:nowrap}.tip{font-size:12px;color:#6f6559}.chip{font-size:11px;border-radius:99px;padding:5px 9px;background:#eaf3e7;color:#457247;font-weight:700}
+@media(max-width:750px){.wrap{padding:20px 12px 40px}.top{padding:12px}.cards{grid-template-columns:repeat(2,1fr);gap:8px}.card{padding:15px}.card strong{font-size:26px}.toolbar{align-items:stretch}.toolbar>.btn{width:100%}.branches{width:100%}.branches button{flex:1}.catalog-head{padding:15px}.filters{padding:12px}.table-scroll{overflow-x:auto}table{min-width:620px}td,th{padding:12px}.public-grid{grid-template-columns:1fr 1fr}.demo{font-size:10px}.brand b{font-size:14px}}
+@media(max-width:430px){.public-grid{grid-template-columns:1fr}.top .logo{width:37px;height:37px}.brand small{font-size:8px}.two{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="top"><div class="brand"><div class="logo">F<span style="color:#cfa46f">.</span></div><div><b>FABRICA COFFEE</b><small>MENU CONTROL CENTER</small></div></div><span class="demo">● ТЕСТОВАЯ ВЕРСИЯ</span></header>
+<main class="wrap"><div class="eyebrow">FABRICA / УПРАВЛЕНИЕ МЕНЮ</div><h1 id="pageTitle">Меню под контролем.</h1><p>Проверяйте, как удобно обновлять блюда и цены с телефона или компьютера.</p>
+<div class="notice"><b>Демонстрация — без связи с настоящим сайтом.</b> Изменения остаются только в этом браузере. Для теста пароль не нужен. Демо содержит примеры позиций из опубликованного меню двух филиалов, а не полный каталог Tilda.</div>
+<div class="toolbar"><div class="branches"><button type="button" id="branchMhk">Махачкала</button><button type="button" id="branchKhas">Хасавюрт</button></div><div class="actions"><button class="btn" id="previewBtn">◉ Меню для гостя</button><button class="btn primary" id="addBtn">＋ Добавить позицию</button></div></div>
+<div id="adminView"><div class="cards"><div class="card"><span>Всего</span><strong id="total">0</strong><em>позиций</em></div><div class="card"><span>Активны</span><strong id="active">0</strong><em>показываются гостям</em></div><div class="card"><span>Скрыты</span><strong id="hiddenNum">0</strong><em>нет в меню</em></div><div class="card"><span>Разделы</span><strong id="catsNum">0</strong><em>категорий</em></div></div>
+<section class="catalog"><div class="catalog-head"><h2>Редактор позиций</h2><div class="actions"><button id="catBtn" class="btn">＋ Категория</button><button id="exportBtn" class="btn">⇩ JSON</button><button id="resetBtn" class="btn warn">Сбросить демо</button></div></div>
+<div class="filters"><input id="search" placeholder="Поиск блюда или напитка…"><select id="categoryFilter"><option value="">Все категории</option></select><select id="statusFilter"><option value="all">Все позиции</option><option value="visible">В меню</option><option value="hidden">Скрытые</option></select></div>
+<div class="table-scroll"><table><thead><tr><th>НАИМЕНОВАНИЕ</th><th>КАТЕГОРИЯ</th><th>ЦЕНА, ₽</th><th>СТАТУС</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<div id="empty" class="empty hidden">В этой категории пока ничего нет</div><div class="foot" id="foot"> </div></section></div>
+<section id="publicView" class="hidden"><div class="catalog" style="padding:20px"><div class="eyebrow">FABRICA COFFEE</div><h2 class="public-title">Наше меню</h2><p id="publicBranch"></p><div id="publicContent"></div></div></section>
+<div class="tip" style="margin-top:20px">При тестировании попробуйте: изменить цену, скрыть позицию, добавить блюдо и проверить «Меню для гостя».</div></main>
+<dialog id="itemDialog"><div class="modal-head"><h2 id="modalTitle">Новая позиция</h2><button class="btn" id="closeDialog" type="button" aria-label="Закрыть">✕</button></div>
+<form id="editForm" class="modal"><div class="field"><label for="name">Название блюда</label><input id="name" required maxlength="120"></div><div class="two"><div class="field"><label for="price">Цена, ₽</label><input id="price" type="number" required min="0" max="999999"></div><div class="field"><label for="category">Категория</label><select id="category"></select></div></div><div class="field"><label for="desc">Описание</label><textarea id="desc" maxlength="600"></textarea></div><div class="field"><label for="img">Ссылка на фото (HTTPS)</label><input id="img" type="url" placeholder="https://…"></div><div class="modal-foot"><button class="btn" id="cancelBtn" type="button">Отмена</button><button class="btn primary" type="submit">Сохранить</button></div></form></dialog>
+<script>
+(function(){
+"use strict";
+var KEY="fabrica_demo_2026_v1";
+var initial=[
+["mhk","Кофейные","Двойной эспрессо",230],["mhk","Кофейные","Американо",230],["mhk","Кофейные","Пуровер",300],["mhk","Классические","Флэт Уайт",280],["mhk","Классические","Латте",300],["mhk","Классические","Капучино маленький",250],["mhk","Классические","Капучино большой",300],["mhk","Авторский кофе","Раф кофе",380],["mhk","Авторский кофе","Матча латте на кокосовом",380],["mhk","Холодные","Айс Латте",330],["mhk","Холодные","Бамбл",430],["mhk","Лимонады","Ананас-Маракуйя",400],["mhk","Завтраки","Авокадо с курицей",600],["mhk","Завтраки","Деревенский завтрак",500],["mhk","Салатики","Цезарь с курицей",400],["mhk","Сэндвичи","Чиабатта с курицей",350],["mhk","Перекус","Картошка фри",250],
+["khas","Кофейные","Двойной эспрессо",200],["khas","Кофейные","Американо",200],["khas","Кофейные","Пуровер",300],["khas","Классические","Флэт Уайт",250],["khas","Классические","Латте",250],["khas","Классические","Капучино маленький",200],["khas","Классические","Капучино большой",250],["khas","Авторские","Раф кофе",300],["khas","Авторские","Жареный латте",250],["khas","Коктейли","Молочный коктейль",250],["khas","Холодные","Айс Латте",250],["khas","Холодные","Бамбл",350],["khas","Холодные","Cold brew",300],["khas","Лимонады","Ананас-Маракуйя",400],["khas","Сезонные","Листовой чай",330]
+];
+var defaultCats={mhk:["Кофейные","Классические","Авторский кофе","Холодные","Лимонады","Завтраки","Салатики","Сэндвичи","Перекус"],khas:["Кофейные","Классические","Авторские","Коктейли","Сезонные","Холодные","Лимонады","Завтраки","Салатики","Пицца"]};
+function fresh(){return {items:initial.map(function(x,i){return {id:i+1,branch:x[0],category:x[1],name:x[2],price:x[3],description:"",image:"",visible:true}}),categories:JSON.parse(JSON.stringify(defaultCats)),next:initial.length+1};}
+function load(){try{var v=JSON.parse(localStorage.getItem(KEY));if(v&&Array.isArray(v.items)&&v.categories&&v.next)return v}catch(e){}return fresh()}
+var state=load(),branch="khas",editing=null,preview=false;
+var $=function(id){return document.getElementById(id)};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert("Не удалось сохранить данные в этом браузере. Возможно, хранилище недоступно.")}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function current(){return state.items.filter(function(x){return x.branch===branch})}
+function updateCats(){var x=$("categoryFilter").value,options='<option value="">Все категории</option>';state.categories[branch].forEach(function(c){options+='<option value="'+esc(c)+'">'+esc(c)+'</option>'});$("categoryFilter").innerHTML=options;if(state.categories[branch].includes(x))$("categoryFilter").value=x}
+function draw(){
+ $("branchMhk").classList.toggle("active",branch==="mhk");$("branchKhas").classList.toggle("active",branch==="khas");
+ $("pageTitle").textContent=preview?"Как увидит меню гость.":"Меню под контролем.";
+ $("previewBtn").textContent=preview?"← Назад в админку":"◉ Меню для гостя";
+ $("addBtn").classList.toggle("hidden",preview);
+ $("adminView").classList.toggle("hidden",preview);$("publicView").classList.toggle("hidden",!preview);
+ var items=current();if(preview){drawPublic(items);return}
+ var prevCat=$("categoryFilter").value;updateCats();if(state.categories[branch].includes(prevCat))$("categoryFilter").value=prevCat;
+ $("total").textContent=items.length;$("active").textContent=items.filter(function(x){return x.visible}).length;$("hiddenNum").textContent=items.filter(function(x){return !x.visible}).length;$("catsNum").textContent=state.categories[branch].length;
+ var q=$("search").value.trim().toLowerCase(),cat=$("categoryFilter").value,status=$("statusFilter").value;
+ var shown=items.filter(function(x){return (!cat||x.category===cat)&&(!q||x.name.toLowerCase().includes(q)||(x.description||"").toLowerCase().includes(q))&&(status==="all"||(status==="visible"&&x.visible)||(status==="hidden"&&!x.visible))});
+ var body="";
+ shown.forEach(function(x){
+ body+='<tr><td><span class="item-name">'+esc(x.name)+'</span><small>'+esc(x.description||"Редактирование позиции")+'</small></td><td>'+esc(x.category)+'</td><td><input class="price" type="number" min="0" max="999999" aria-label="Цена '+esc(x.name)+'" data-action="price" data-id="'+x.id+'" value="'+x.price+'"></td><td><label class="switch"><input type="checkbox" data-action="visible" data-id="'+x.id+'" '+(x.visible?"checked":"")+'> '+(x.visible?"В меню":"Скрыто")+'</label></td><td class="right"><button class="btn" data-action="edit" data-id="'+x.id+'">✎</button> <button class="btn warn" data-action="delete" data-id="'+x.id+'">✕</button></td></tr>';
+ });
+ $("rows").innerHTML=body;$("empty").classList.toggle("hidden",shown.length>0);$("foot").textContent="Показано: "+shown.length+" из "+items.length+" • тестовая база в браузере";
+}
+function drawPublic(items){
+ $("publicBranch").textContent=branch==="mhk"?"Махачкала":"Хасавюрт";
+ var body="";state.categories[branch].forEach(function(c){
+ var good=items.filter(function(x){return x.visible&&x.category===c});if(!good.length)return;
+ body+='<h3 class="public-cat">'+esc(c)+'</h3><div class="public-grid">';
+ good.forEach(function(x){
+ var img=x.image&&/^https:\/\//.test(x.image)?'<img src="'+esc(x.image)+'" loading="lazy" alt="'+esc(x.name)+'">':"";
+ body+='<article class="public-card">'+img+'<strong>'+esc(x.name)+'</strong>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'<b>'+x.price+' ₽</b></article>';
+ });body+='</div>';
+ });$("publicContent").innerHTML=body||'<p>Нет доступных блюд</p>';
+}
+function openForm(id){
+ editing=id==null?null:id;var x=editing==null?{name:"",price:250,category:state.categories[branch][0],description:"",image:""}:state.items.find(function(a){return a.id===id});if(!x)return;
+ $("modalTitle").textContent=editing==null?"Добавить позицию":"Изменить позицию";$("category").innerHTML=state.categories[branch].map(function(c){return '<option value="'+esc(c)+'">'+esc(c)+'</option>'}).join("");
+ $("name").value=x.name;$("price").value=x.price;$("category").value=x.category;$("desc").value=x.description||"";$("img").value=x.image||"";$("itemDialog").showModal();
+}
+$("branchMhk").onclick=function(){branch="mhk";$("search").value="";$("categoryFilter").value="";draw()};
+$("branchKhas").onclick=function(){branch="khas";$("search").value="";$("categoryFilter").value="";draw()};
+$("previewBtn").onclick=function(){preview=!preview;draw()};
+$("addBtn").onclick=function(){openForm(null)};
+$("closeDialog").onclick=$("cancelBtn").onclick=function(){$("itemDialog").close()};
+$("search").oninput=draw;$("categoryFilter").onchange=draw;$("statusFilter").onchange=draw;
+$("catBtn").onclick=function(){var n=prompt("Название новой категории");if(!n)return;n=n.trim().slice(0,100);if(!n)return;if(state.categories[branch].includes(n)){alert("Такая категория уже есть");return}state.categories[branch].push(n);save();draw()};
+$("editForm").onsubmit=function(e){e.preventDefault();var name=$("name").value.trim(),price=Number($("price").value),img=$("img").value.trim();if(!name||!Number.isInteger(price)||price<0||price>999999){alert("Проверьте название и цену");return}if(img&&!/^https:\/\//i.test(img)){alert("Для фото допустима только HTTPS-ссылка");return}
+ if(editing==null){state.items.push({id:state.next++,branch:branch,category:$("category").value,name:name,price:price,description:$("desc").value.trim(),image:img,visible:true})}
+ else {var x=state.items.find(function(v){return v.id===editing});if(!x)return;x.name=name;x.price=price;x.category=$("category").value;x.description=$("desc").value.trim();x.image=img}
+ save();$("itemDialog").close();draw()};
+$("rows").addEventListener("change",function(e){var a=e.target.getAttribute("data-action"),id=Number(e.target.getAttribute("data-id"));if(!a)return;var x=state.items.find(function(v){return v.id===id});if(!x)return;
+ if(a==="price"){var n=Number(e.target.value);if(!Number.isInteger(n)||n<0||n>999999){alert("Некорректная цена");e.target.value=x.price;return}x.price=n;save();draw()}
+ else if(a==="visible"){x.visible=e.target.checked;save();draw()}
+});
+$("rows").addEventListener("click",function(e){var t=e.target.closest("button[data-action]");if(!t)return;var id=Number(t.getAttribute("data-id"));var a=t.getAttribute("data-action");
+ if(a==="edit")openForm(id);
+ if(a==="delete"){var x=state.items.find(function(v){return v.id===id});if(x&&confirm("Удалить «"+x.name+"» из тестового меню?")){state.items=state.items.filter(function(v){return v.id!==id});save();draw()}}
+});
+$("resetBtn").onclick=function(){if(confirm("Сбросить ВСЕ тестовые изменения в этом браузере?")){state=fresh();save();draw()}};
+$("exportBtn").onclick=function(){var blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="fabrica-demo-menu.json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)};
+draw();
+})();
+</script></body></html>
