@@ -25,29 +25,28 @@ dialog{border:0;padding:0;border-radius:18px;width:min(560px,calc(100vw - 26px))
 <body>
 <header class="top"><div class="brand"><div class="logo">F<span style="color:#cfa46f">.</span></div><div><b>FABRICA COFFEE</b><small>MENU CONTROL CENTER</small></div></div><span class="demo">● ТЕСТОВАЯ ВЕРСИЯ</span></header>
 <main class="wrap"><div class="eyebrow">FABRICA / УПРАВЛЕНИЕ МЕНЮ</div><h1 id="pageTitle">Меню под контролем.</h1><p>Проверяйте, как удобно обновлять блюда и цены с телефона или компьютера.</p>
-<div class="notice"><b>Демонстрация — без связи с настоящим сайтом.</b> Изменения остаются только в этом браузере. Для теста пароль не нужен. Демо содержит примеры позиций из опубликованного меню двух филиалов, а не полный каталог Tilda.</div>
+<div class="notice"><b>Демонстрация — без связи с настоящим сайтом.</b> Изменения остаются только в этом браузере. Для теста пароль не нужен. Доступны 106 предварительно перенесённых позиций (Махачкала — 71, Хасавюрт — 35); полный каталог необходимо сверить с Tilda. Если открывали старую демоверсию, нажмите «Дополнить каталог», чтобы сохранить свои правки и добавить недостающие позиции.</div>
 <div class="toolbar"><div class="branches"><button type="button" id="branchMhk">Махачкала</button><button type="button" id="branchKhas">Хасавюрт</button></div><div class="actions"><button class="btn" id="previewBtn">◉ Меню для гостя</button><button class="btn primary" id="addBtn">＋ Добавить позицию</button></div></div>
 <div id="adminView"><div class="cards"><div class="card"><span>Всего</span><strong id="total">0</strong><em>позиций</em></div><div class="card"><span>Активны</span><strong id="active">0</strong><em>показываются гостям</em></div><div class="card"><span>Скрыты</span><strong id="hiddenNum">0</strong><em>нет в меню</em></div><div class="card"><span>Разделы</span><strong id="catsNum">0</strong><em>категорий</em></div></div>
-<section class="catalog"><div class="catalog-head"><h2>Редактор позиций</h2><div class="actions"><button id="catBtn" class="btn">＋ Категория</button><button id="exportBtn" class="btn">⇩ JSON</button><button id="resetBtn" class="btn warn">Сбросить демо</button></div></div>
+<section class="catalog"><div class="catalog-head"><h2>Редактор позиций</h2><div class="actions"><button id="catBtn" class="btn">＋ Категория</button><button id="seedBtn" class="btn soft">↻ Дополнить каталог</button><button id="csvImportBtn" class="btn">⇧ CSV</button><button id="csvExportBtn" class="btn">⇩ CSV</button><button id="jsonImportBtn" class="btn">⇧ JSON</button><button id="exportBtn" class="btn">⇩ JSON</button><button id="resetBtn" class="btn warn">Сбросить демо</button><input id="fileImport" type="file" accept=".csv,.json,text/csv,application/json" hidden></div></div>
 <div class="filters"><input id="search" placeholder="Поиск блюда или напитка…"><select id="categoryFilter"><option value="">Все категории</option></select><select id="statusFilter"><option value="all">Все позиции</option><option value="visible">В меню</option><option value="hidden">Скрытые</option></select></div>
 <div class="table-scroll"><table><thead><tr><th>НАИМЕНОВАНИЕ</th><th>КАТЕГОРИЯ</th><th>ЦЕНА, ₽</th><th>СТАТУС</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
 <div id="empty" class="empty hidden">В этой категории пока ничего нет</div><div class="foot" id="foot"> </div></section></div>
 <section id="publicView" class="hidden"><div class="catalog" style="padding:20px"><div class="eyebrow">FABRICA COFFEE</div><h2 class="public-title">Наше меню</h2><p id="publicBranch"></p><div id="publicContent"></div></div></section>
-<div class="tip" style="margin-top:20px">При тестировании попробуйте: изменить цену, скрыть позицию, добавить блюдо и проверить «Меню для гостя».</div></main>
+<div class="tip" style="margin-top:20px">Попробуйте изменить цену, скрыть блюдо, загрузить фотографию, импортировать CSV и проверить «Меню для гостя». Тестовые данные не синхронизируются между устройствами.</div></main>
 <dialog id="itemDialog"><div class="modal-head"><h2 id="modalTitle">Новая позиция</h2><button class="btn" id="closeDialog" type="button" aria-label="Закрыть">✕</button></div>
-<form id="editForm" class="modal"><div class="field"><label for="name">Название блюда</label><input id="name" required maxlength="120"></div><div class="two"><div class="field"><label for="price">Цена, ₽</label><input id="price" type="number" required min="0" max="999999"></div><div class="field"><label for="category">Категория</label><select id="category"></select></div></div><div class="field"><label for="desc">Описание</label><textarea id="desc" maxlength="600"></textarea></div><div class="field"><label for="img">Ссылка на фото (HTTPS)</label><input id="img" type="url" placeholder="https://…"></div><div class="modal-foot"><button class="btn" id="cancelBtn" type="button">Отмена</button><button class="btn primary" type="submit">Сохранить</button></div></form></dialog>
+<form id="editForm" class="modal"><div class="field"><label for="name">Название блюда</label><input id="name" required maxlength="120"></div><div class="two"><div class="field"><label for="price">Цена, ₽</label><input id="price" type="number" required min="0" max="999999"></div><div class="field"><label for="category">Категория</label><select id="category"></select></div></div><div class="field"><label for="desc">Описание</label><textarea id="desc" maxlength="600"></textarea></div><div class="field"><label for="img">Ссылка на фото (HTTPS)</label><input id="img" type="url" placeholder="https://…"></div><div class="field"><label for="photoFile">Или выберите фото с телефона</label><input id="photoFile" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif"><div class="tip" id="photoHint">Фото автоматически сжимается для демо и хранится только на этом устройстве.</div></div><div class="modal-foot"><button class="btn" id="cancelBtn" type="button">Отмена</button><button class="btn primary" type="submit">Сохранить</button></div></form></dialog>
+<script src="./seed-data.js"></script>
 <script>
 (function(){
 "use strict";
 var KEY="fabrica_demo_2026_v1";
-var initial=[
-["mhk","Кофейные","Двойной эспрессо",230],["mhk","Кофейные","Американо",230],["mhk","Кофейные","Пуровер",300],["mhk","Классические","Флэт Уайт",280],["mhk","Классические","Латте",300],["mhk","Классические","Капучино маленький",250],["mhk","Классические","Капучино большой",300],["mhk","Авторский кофе","Раф кофе",380],["mhk","Авторский кофе","Матча латте на кокосовом",380],["mhk","Холодные","Айс Латте",330],["mhk","Холодные","Бамбл",430],["mhk","Лимонады","Ананас-Маракуйя",400],["mhk","Завтраки","Авокадо с курицей",600],["mhk","Завтраки","Деревенский завтрак",500],["mhk","Салатики","Цезарь с курицей",400],["mhk","Сэндвичи","Чиабатта с курицей",350],["mhk","Перекус","Картошка фри",250],
-["khas","Кофейные","Двойной эспрессо",200],["khas","Кофейные","Американо",200],["khas","Кофейные","Пуровер",300],["khas","Классические","Флэт Уайт",250],["khas","Классические","Латте",250],["khas","Классические","Капучино маленький",200],["khas","Классические","Капучино большой",250],["khas","Авторские","Раф кофе",300],["khas","Авторские","Жареный латте",250],["khas","Коктейли","Молочный коктейль",250],["khas","Холодные","Айс Латте",250],["khas","Холодные","Бамбл",350],["khas","Холодные","Cold brew",300],["khas","Лимонады","Ананас-Маракуйя",400],["khas","Сезонные","Листовой чай",330]
-];
+var initial=window.FABRICA_DEMO_SEED || [];
 var defaultCats={mhk:["Кофейные","Классические","Авторский кофе","Холодные","Лимонады","Завтраки","Салатики","Сэндвичи","Перекус"],khas:["Кофейные","Классические","Авторские","Коктейли","Сезонные","Холодные","Лимонады","Завтраки","Салатики","Пицца"]};
+for(var si=0;si<initial.length;si++){var sc=initial[si];if(!defaultCats[sc[0]].includes(sc[1]))defaultCats[sc[0]].push(sc[1]);}
 function fresh(){return {items:initial.map(function(x,i){return {id:i+1,branch:x[0],category:x[1],name:x[2],price:x[3],description:"",image:"",visible:true}}),categories:JSON.parse(JSON.stringify(defaultCats)),next:initial.length+1};}
 function load(){try{var v=JSON.parse(localStorage.getItem(KEY));if(v&&Array.isArray(v.items)&&v.categories&&v.next)return v}catch(e){}return fresh()}
-var state=load(),branch="khas",editing=null,preview=false;
+var state=load(),branch="khas",editing=null,preview=false,photoUploaded="";
 var $=function(id){return document.getElementById(id)};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert("Не удалось сохранить данные в этом браузере. Возможно, хранилище недоступно.")}}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -76,13 +75,13 @@ function drawPublic(items){
  var good=items.filter(function(x){return x.visible&&x.category===c});if(!good.length)return;
  body+='<h3 class="public-cat">'+esc(c)+'</h3><div class="public-grid">';
  good.forEach(function(x){
- var img=x.image&&/^https:\/\//.test(x.image)?'<img src="'+esc(x.image)+'" loading="lazy" alt="'+esc(x.name)+'">':"";
+ var img=x.image&&(/^(https:\/\/|data:image\/jpeg;base64,)/i.test(x.image))?'<img src="'+esc(x.image)+'" loading="lazy" alt="'+esc(x.name)+'">':"";
  body+='<article class="public-card">'+img+'<strong>'+esc(x.name)+'</strong>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'<b>'+x.price+' ₽</b></article>';
  });body+='</div>';
  });$("publicContent").innerHTML=body||'<p>Нет доступных блюд</p>';
 }
 function openForm(id){
- editing=id==null?null:id;var x=editing==null?{name:"",price:250,category:state.categories[branch][0],description:"",image:""}:state.items.find(function(a){return a.id===id});if(!x)return;
+ editing=id==null?null:id;photoUploaded="";$("photoFile").value="";$("photoHint").textContent="Фото автоматически сжимается для демо и хранится только на этом устройстве.";var x=editing==null?{name:"",price:250,category:state.categories[branch][0],description:"",image:""}:state.items.find(function(a){return a.id===id});if(!x)return;
  $("modalTitle").textContent=editing==null?"Добавить позицию":"Изменить позицию";$("category").innerHTML=state.categories[branch].map(function(c){return '<option value="'+esc(c)+'">'+esc(c)+'</option>'}).join("");
  $("name").value=x.name;$("price").value=x.price;$("category").value=x.category;$("desc").value=x.description||"";$("img").value=x.image||"";$("itemDialog").showModal();
 }
@@ -93,12 +92,12 @@ $("addBtn").onclick=function(){openForm(null)};
 $("closeDialog").onclick=$("cancelBtn").onclick=function(){$("itemDialog").close()};
 $("search").oninput=draw;$("categoryFilter").onchange=draw;$("statusFilter").onchange=draw;
 $("catBtn").onclick=function(){var n=prompt("Название новой категории");if(!n)return;n=n.trim().slice(0,100);if(!n)return;if(state.categories[branch].includes(n)){alert("Такая категория уже есть");return}state.categories[branch].push(n);save();draw()};
-$("editForm").onsubmit=function(e){e.preventDefault();var name=$("name").value.trim(),price=Number($("price").value),img=$("img").value.trim();if(!name||!Number.isInteger(price)||price<0||price>999999){alert("Проверьте название и цену");return}if(img&&!/^https:\/\//i.test(img)){alert("Для фото допустима только HTTPS-ссылка");return}
+$("editForm").onsubmit=function(e){e.preventDefault();var name=$("name").value.trim(),price=Number($("price").value),img=photoUploaded||$("img").value.trim();if(!name||!Number.isInteger(price)||price<0||price>999999){alert("Проверьте название и цену");return}if(img&&!/^https:\/\//i.test(img)&&!/^data:image\/jpeg;base64,/i.test(img)){alert("Допустима ссылка HTTPS или загруженное фото");return}
  if(editing==null){state.items.push({id:state.next++,branch:branch,category:$("category").value,name:name,price:price,description:$("desc").value.trim(),image:img,visible:true})}
  else {var x=state.items.find(function(v){return v.id===editing});if(!x)return;x.name=name;x.price=price;x.category=$("category").value;x.description=$("desc").value.trim();x.image=img}
  save();$("itemDialog").close();draw()};
 $("rows").addEventListener("change",function(e){var a=e.target.getAttribute("data-action"),id=Number(e.target.getAttribute("data-id"));if(!a)return;var x=state.items.find(function(v){return v.id===id});if(!x)return;
- if(a==="price"){var n=Number(e.target.value);if(!Number.isInteger(n)||n<0||n>999999){alert("Некорректная цена");e.target.value=x.price;return}x.price=n;save();draw()}
+ if(a==="price"){var n=Number(e.target.value);if(String(e.target.value).trim()===""||!Number.isInteger(n)||n<0||n>999999){alert("Некорректная цена");e.target.value=x.price;return}x.price=n;save();draw()}
  else if(a==="visible"){x.visible=e.target.checked;save();draw()}
 });
 $("rows").addEventListener("click",function(e){var t=e.target.closest("button[data-action]");if(!t)return;var id=Number(t.getAttribute("data-id"));var a=t.getAttribute("data-action");
@@ -107,6 +106,119 @@ $("rows").addEventListener("click",function(e){var t=e.target.closest("button[da
 });
 $("resetBtn").onclick=function(){if(confirm("Сбросить ВСЕ тестовые изменения в этом браузере?")){state=fresh();save();draw()}};
 $("exportBtn").onclick=function(){var blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="fabrica-demo-menu.json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)};
+
+function download(name,content,mime){
+ var b=new Blob([content],{type:mime}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},1000);
+}
+function csvSafe(v){
+ var t=String(v==null?"":v);
+ if(/^[=+\-@\t\r]/.test(t))t="'"+t;
+ return '"'+t.replace(/"/g,'""')+'"';
+}
+$("csvExportBtn").onclick=function(){
+ var header=["branch","category","name","price","description","visible","image"];
+ var rows=current().map(function(x){return [x.branch,x.category,x.name,x.price,x.description||"",x.visible?"1":"0",x.image||""]});
+ download("fabrica-"+branch+"-menu.csv","\uFEFF"+[header].concat(rows).map(function(r){return r.map(csvSafe).join(";")}).join("\r\n"),"text/csv;charset=utf-8");
+};
+function parseCSV(text){
+ text=text.replace(/^\uFEFF/,"");
+ var first=text.split(/\r?\n/)[0];
+ var delims=[";","\t",","].sort(function(a,b){return first.split(b).length-first.split(a).length});
+ var delim=delims[0],rows=[],cell="",row=[],quoted=false;
+ for(var i=0;i<text.length;i++){
+  var ch=text[i];
+  if(quoted){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++}else if(ch==='"')quoted=false;else cell+=ch;}
+  else if(ch==='"')quoted=true;
+  else if(ch===delim){row.push(cell);cell=""}
+  else if(ch==="\n"){row.push(cell.replace(/\r$/,""));if(row.some(function(v){return v.trim()}))rows.push(row);row=[];cell=""}
+  else cell+=ch;
+ }
+ if(quoted)throw Error("Незакрытые кавычки в CSV");
+ row.push(cell.replace(/\r$/,""));if(row.some(function(v){return v.trim()}))rows.push(row);
+ return rows;
+}
+function csvImport(text){
+ var rows=parseCSV(text);
+ if(rows.length<2)throw Error("CSV-файл пуст или не содержит строк меню");
+ if(rows.length>3001)throw Error("Максимум 3000 строк за один импорт");
+ var norm=function(x){return String(x||"").toLowerCase().trim().replace(/^\uFEFF/,"").replace(/\s+/g," ")};
+ var names=rows.shift().map(norm);
+ var find=function(arr){for(var i=0;i<arr.length;i++){var p=names.indexOf(arr[i]);if(p>=0)return p}return -1};
+ var indexes={name:find(["name","title","название","название товара","наименование","product name"]),price:find(["price","цена","стоимость","price r", "price rub"]),category:find(["category","категория","категория товара","раздел"]),branch:find(["branch","филиал","город"]),desc:find(["description","описание","описание товара"]),vis:find(["visible","активен","показывать","visibility"]),img:find(["image","photo","изображение","фото","image url"])};
+ if(indexes.name<0||indexes.price<0)throw Error("Не найдены столбцы name/Название и price/Цена. Проверьте формат CSV");
+ var incoming=[];
+ rows.forEach(function(row,ri){
+  var value=function(k){return indexes[k]<0?"":String(row[indexes[k]]||"").trim()};
+  var name=value("name").slice(0,120),rawPrice=value("price").replace(/\s/g,"").replace(/[₽р]/gi,"").replace(",",".");
+  if(!name)return;
+  var price=Number(rawPrice);
+  if(!rawPrice||!Number.isFinite(price)||price<0||price>999999)throw Error("Некорректная цена в строке "+(ri+2));
+  var city=norm(value("branch")),br=city==="mhk"||city==="махачкала"?"mhk":city==="khas"||city==="хасавюрт"?"khas":branch;
+  var category=value("category").slice(0,100)||"Без категории";
+  var im=value("img").slice(0,1500),vis=value("vis").toLowerCase();
+  incoming.push({name:name,price:price,branch:br,category:category,description:value("desc").slice(0,600),image:/^https:\/\//i.test(im)?im:"",visible:!["0","false","нет","no","скрыто"].includes(vis)});
+ });
+ if(!incoming.length)throw Error("В файле нет позиций");
+ if(!confirm("Импортировать "+incoming.length+" позиций? Совпадения по имени и филиалу обновят цену; остальные будут добавлены."))return;
+ var added=0,updated=0;
+ incoming.forEach(function(x){
+  if(!state.categories[x.branch].includes(x.category))state.categories[x.branch].push(x.category);
+  var existing=state.items.find(function(item){return item.branch===x.branch&&norm(item.name)===norm(x.name)});
+  if(existing){existing.price=x.price;existing.category=x.category;existing.description=x.description||existing.description;existing.image=x.image||existing.image;existing.visible=x.visible;updated++}
+  else{state.items.push(Object.assign({id:state.next++},x));added++}
+ });
+ save();draw();alert("Импорт завершён: добавлено "+added+", обновлено "+updated+".");
+}
+$("csvImportBtn").onclick=function(){$("fileImport").accept=".csv,text/csv";$("fileImport").value="";$("fileImport").click()};
+$("jsonImportBtn").onclick=function(){$("fileImport").accept=".json,application/json";$("fileImport").value="";$("fileImport").click()};
+$("fileImport").onchange=async function(){
+ var file=this.files&&this.files[0];if(!file)return;
+ if(file.size>4*1024*1024){alert("Файл должен быть меньше 4 МБ");return}
+ try{
+  var text=await file.text();
+  if(file.name.toLowerCase().endsWith(".json")){
+   var o=JSON.parse(text);
+   if(!o||!Array.isArray(o.items)||o.items.length>3000||!o.categories||!Array.isArray(o.categories.mhk)||!Array.isArray(o.categories.khas))throw Error("Неверная структура резервной копии");
+   var freshItems=o.items.map(function(x,i){
+    var p=Number(x.price),b=x.branch;
+    if(!["mhk","khas"].includes(b)||!String(x.name||"").trim()||!Number.isFinite(p)||p<0||p>999999)throw Error("Ошибка данных в позиции №"+(i+1));
+    var im=String(x.image||"").slice(0,750000);
+    return {id:i+1,branch:b,category:String(x.category||"Без категории").slice(0,100),name:String(x.name).slice(0,120),price:p,description:String(x.description||"").slice(0,600),image:/^(https:\/\/|data:image\/jpeg;base64,)/i.test(im)?im:"",visible:x.visible!==false};
+   });
+   var categories={mhk:[],khas:[]};
+   ["mhk","khas"].forEach(function(b){(o.categories[b]||[]).forEach(function(c){c=String(c).slice(0,100);if(c&&!categories[b].includes(c))categories[b].push(c)})});
+   freshItems.forEach(function(x){if(!categories[x.branch].includes(x.category))categories[x.branch].push(x.category)});
+   if(!confirm("Восстановить "+freshItems.length+" позиций из JSON? Все текущие изменения этого браузера будут заменены."))return;
+   state={items:freshItems,categories:categories,next:freshItems.length+1};save();draw();alert("Резервная копия восстановлена");
+  }else csvImport(text);
+ }catch(e){alert("Импорт не удался: "+e.message)}
+};
+$("seedBtn").onclick=function(){
+ var norm=function(x){return String(x).trim().toLowerCase()};
+ var remaining=initial.filter(function(r){return !state.items.some(function(x){return x.branch===r[0]&&norm(x.name)===norm(r[2])})});
+ if(!remaining.length){alert("Все доступные позиции уже есть в тестовом меню.");return}
+ if(!confirm("Добавить "+remaining.length+" отсутствующих позиций из опубликованного меню? Существующие блюда и ваши изменения цен сохранятся."))return;
+ remaining.forEach(function(r){if(!state.categories[r[0]].includes(r[1]))state.categories[r[0]].push(r[1]);state.items.push({id:state.next++,branch:r[0],category:r[1],name:r[2],price:r[3],description:"",image:"",visible:true})});
+ save();draw();alert("Добавлено "+remaining.length+" позиций. Перепроверьте цены перед использованием в работе.");
+};
+$("photoFile").onchange=function(){
+ var f=this.files&&this.files[0];if(!f)return;
+ if(f.size>5*1024*1024){alert("Максимальный размер исходного фото — 5 МБ");this.value="";return}
+ if(!(/^image\/(jpeg|png|webp|heic|heif)$/.test(f.type))){alert("Нужен файл JPG, PNG, WEBP или HEIC");this.value="";return}
+ var url=URL.createObjectURL(f),im=new Image();
+ im.onload=function(){
+  try{
+   var w=im.naturalWidth,h=im.naturalHeight,scale=Math.min(1,750/Math.max(w,h));
+   var canvas=document.createElement("canvas");canvas.width=Math.max(1,Math.round(w*scale));canvas.height=Math.max(1,Math.round(h*scale));
+   canvas.getContext("2d").drawImage(im,0,0,canvas.width,canvas.height);
+   var base=canvas.toDataURL("image/jpeg",0.72);
+   if(base.length>750000)throw Error("Фото слишком велико даже после сжатия");
+   photoUploaded=base;$("photoHint").textContent="✓ Фото обработано. Нажмите «Сохранить».";URL.revokeObjectURL(url);
+  }catch(e){URL.revokeObjectURL(url);alert("Не удалось обработать фото: "+e.message)}
+ };
+ im.onerror=function(){URL.revokeObjectURL(url);alert("Формат фото не поддерживается браузером. Попробуйте JPG.")};im.src=url;
+};
+
 draw();
 })();
 </script></body></html>
