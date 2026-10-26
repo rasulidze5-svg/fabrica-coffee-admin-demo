@@ -8,11 +8,11 @@ const readme = readFileSync("README.md", "utf8");
 
 assert.match(html, /<!doctype html>/i, "Нет HTML5 doctype");
 assert.match(html, /<html[^>]+lang=["']ru["']/i, "Нет русской локали");
-assert.match(html, /<script\\s+src=["']\\.\\/seed-data\\.js["']/i, "Не подключён каталог");
+assert.match(html, /<script\s+src=["']\.\/seed-data\.js["']/i, "Не подключён каталог");
 assert.match(html, /Демонстрация[^<]{0,100}без связи с настоящим сайтом/i, "Нет предупреждения о демо");
 assert.match(readme, /localStorage/, "Не описано локальное хранение данных");
 
-const inlineScripts = [...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)]
+const inlineScripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
   .map((match) => match[1]).filter((script) => script.trim());
 assert.ok(inlineScripts.length > 0, "В index.html не найден исполняемый JavaScript");
 inlineScripts.forEach((source, index) => new vm.Script(source, { filename: "inline-" + index + ".js" }));
